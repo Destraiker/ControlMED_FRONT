@@ -48,8 +48,13 @@ switch ($request) {
 	case '/' . PASTAFRONT . '/medico/inicio':
 		$data = VeridicarCookie($_COOKIE['jwt_medico']);
 		if ($data == "Token invalido") {
-			echo "Invalido";
+			header('Location: ./login');
 		} else {
+			$nome = "crm";
+			$valor = $data->crm;
+			$expira = time() + 3600;
+			setcookie($nome, $valor, $expira);
+
 			echo HTMLMODELOP1;
 			echo "<title>ControlMED | Medico | Inicio</title>";
 			require __DIR__ . '/medico/head.html';
@@ -67,32 +72,210 @@ switch ($request) {
 			echo HTMLMODELOP6;
 		}
 		break;
+	case '/' . PASTAFRONT . '/medico/nova_receita':
+		$data = VeridicarCookie($_COOKIE['jwt_medico']);
+		if ($data == "Token invalido") {
+			header('Location: ./login');
+		} else {
+			$nome = "crm";
+			$valor = $data->crm;
+			$expira = time() + 3600;
+			setcookie($nome, $valor, $expira);
+
+			echo HTMLMODELOP1;
+			echo "<title>ControlMED | Medico | Inicio</title>";
+			require __DIR__ . '/medico/head.html';
+			echo HTMLMODELOP2;
+			require __DIR__  . '/medico/menu.html';
+			echo HTMLMODELOP3;
+			require __DIR__ . '/medico/cabecalho.html';
+			require __DIR__  . '/medico/nova_receita.html';
+			echo HTMLMODELOP4;
+			require __DIR__  . '/medico/rodape.html';
+			echo HTMLMODELOP5;
+			require __DIR__  . '\\medico\\modals.html';
+			require __DIR__  . '\\medico\\scripts.html';
+			echo query_nome($data->nome);
+			echo HTMLMODELOP6;
+		}
+		break;
+	case '/' . PASTAFRONT . '/medico/caregando':
+		require __DIR__  . '/medico/caregando.html';
+		break;
+
 	case '/' . PASTAFRONT . '/medico/receitas':
-		echo HTMLMODELOP1;
-		echo "<title>ControlMED | Medico | Receitas</title>";
-		require __DIR__  . '/medico/head.html';
-		echo "<link href='../vendor/datatables/dataTables.bootstrap4.min.css' rel='stylesheet'>";
-		echo HTMLMODELOP2;
-		require __DIR__  .  '/medico/menu.html';
-		echo HTMLMODELOP3;
-		require __DIR__  .  '/medico/cabecalho.html';
-		require __DIR__  .  '/medico/listar_receitas.html';
-		echo HTMLMODELOP4;
-		require __DIR__  .  '/medico/rodape.html';
-		echo HTMLMODELOP5;
-		require __DIR__  .  '/medico/modals.html';
-		require __DIR__ . '/medico/scripts.html';
-		require __DIR__ . '/medico/scripts_tables.html';
+		$data = VeridicarCookie($_COOKIE['jwt_medico']);
+		if ($data == "Token invalido") {
+			header('Location: ./login');
+		} else {
+			$nome = "crm";
+			$valor = $data->crm;
+			$expira = time() + 3600;
+			setcookie($nome, $valor, $expira);
+			echo HTMLMODELOP1;
+			echo "<title>ControlMED | Medico | Receitas</title>";
+			require __DIR__  . '/medico/head.html';
+			echo "<link href='../vendor/datatables/dataTables.bootstrap4.min.css' rel='stylesheet'>";
+			echo HTMLMODELOP2;
+			require __DIR__  .  '/medico/menu.html';
+			echo HTMLMODELOP3;
+			require __DIR__  .  '/medico/cabecalho.html';
+			require __DIR__  .  '/medico/listar_receitas.html';
+			echo HTMLMODELOP4;
+			require __DIR__  .  '/medico/rodape.html';
+			echo HTMLMODELOP5;
+			require __DIR__  .  '/medico/modals.html';
+			require __DIR__ . '/medico/scripts.html';
+			require __DIR__ . '/medico/scripts_tables.html';
+		}
 		echo HTMLMODELOP6;
 		break;
 	case '/' . PASTAFRONT . '/medico/login':
-		echo HTMLMODELOP1;
-		echo "<title>ControlMED | Medico | Login</title>";
-		require __DIR__ . '/medico/head.html';
-		echo "</head><body class='bg-gradient-primary'>";
-		require __DIR__  . '/medico/login.html';
-		require __DIR__  . '/medico/scripts.html';
-		echo HTMLMODELOP6;
+		if (isset($_COOKIE['jwt_medico']) && $_COOKIE['jwt_medico'] != -1) {
+			header('Location: ./inicio');
+		} else {
+			echo HTMLMODELOP1;
+			echo "<title>ControlMED | Medico | Login</title>";
+			require __DIR__ . '/medico/head.html';
+			echo "</head><body class='bg-gradient-primary'>";
+			require __DIR__  . '/medico/login.html';
+			require __DIR__  . '/medico/scripts.html';
+			echo HTMLMODELOP6;
+		}
+		break;
+	case '/' . PASTAFRONT . '/medico/cadastrar':
+		if (isset($_COOKIE['jwt_medico']) && $_COOKIE['jwt_medico'] != -1) {
+			header('Location: ./inicio');
+		} else {
+			echo HTMLMODELOP1;
+			echo "<title>ControlMED | Medico | Cadastrar</title>";
+			require __DIR__ . '/medico/head.html';
+			echo "</head><body class='bg-gradient-primary'>";
+			require __DIR__  . '/medico/cadastro.html';
+			require __DIR__  . '\\medico\\modals.html';
+			require __DIR__  . '/medico/scripts.html';
+			echo HTMLMODELOP6;
+		}
+		break;
+	case '/' . PASTAFRONT . '/farmacia/inicio':
+		$data = VeridicarCookie($_COOKIE['jwt_farmarcia']);
+		if ($data == "Token invalido") {
+			header('Location: ./login');
+		} else {
+			$nome = "cnpj";
+			$valor = $data->cnpj;
+			$expira = time() + 3600;
+			setcookie($nome, $valor, $expira);
+
+			echo HTMLMODELOP1;
+			echo "<title>ControlMED | Farmacia | Inicio</title>";
+			require __DIR__ . '/farmacia/head.html';
+			echo HTMLMODELOP2;
+			require __DIR__  . '/farmacia/menu.html';
+			echo HTMLMODELOP3;
+			require __DIR__ . '/farmacia/cabecalho.html';
+			require __DIR__  . '/farmacia/inicio.html';
+			echo HTMLMODELOP4;
+			require __DIR__  . '/farmacia/rodape.html';
+			echo HTMLMODELOP5;
+			require __DIR__  . '\\farmacia\\modals.html';
+			require __DIR__  . '\\farmacia\\scripts.html';
+			echo query_nome($data->nome);
+			echo HTMLMODELOP6;
+		}
+		break;
+	case '/' . PASTAFRONT . '/farmacia/procurar_receita':
+		$data = VeridicarCookie($_COOKIE['jwt_farmarcia']);
+		if ($data == "Token invalido") {
+			header('Location: ./login');
+		} else {
+			$nome = "cnpj";
+			$valor = $data->cnpj;
+			$expira = time() + 3600;
+			setcookie($nome, $valor, $expira);
+
+			echo HTMLMODELOP1;
+			echo "<title>ControlMED | Farmacia | Procurar</title>";
+			require __DIR__ . '/farmacia/head.html';
+			echo "<link href='../vendor/datatables/dataTables.bootstrap4.min.css' rel='stylesheet'>";
+			echo HTMLMODELOP2;
+			require __DIR__  . '/farmacia/menu.html';
+			echo HTMLMODELOP3;
+			require __DIR__ . '/farmacia/cabecalho.html';
+			require __DIR__  . '/farmacia/procurar_receita.html';
+			echo HTMLMODELOP4;
+			require __DIR__  . '/farmacia/rodape.html';
+			echo HTMLMODELOP5;
+			require __DIR__  . '\\farmacia\\modals.html';
+			require __DIR__  . '\\farmacia\\scripts.html';
+			require __DIR__ . '/medico/scripts_tables.html';
+			echo query_nome($data->nome);
+			echo HTMLMODELOP6;
+		}
+		break;
+	case '/' . PASTAFRONT . '/farmacia/receitas':
+		$data = VeridicarCookie($_COOKIE['jwt_farmarcia']);
+		if ($data == "Token invalido") {
+			header('Location: ./login');
+		} else {
+			$nome = "cnpj";
+			$valor = $data->cnpj;
+			$expira = time() + 3600;
+			setcookie($nome, $valor, $expira);
+
+			echo HTMLMODELOP1;
+			echo "<title>ControlMED | Farmacia | Procurar</title>";
+			require __DIR__ . '/farmacia/head.html';
+			echo "<link href='../vendor/datatables/dataTables.bootstrap4.min.css' rel='stylesheet'>";
+			echo HTMLMODELOP2;
+			require __DIR__  . '/farmacia/menu.html';
+			echo HTMLMODELOP3;
+			require __DIR__ . '/farmacia/cabecalho.html';
+			require __DIR__  . '/farmacia/receitas.html';
+			echo HTMLMODELOP4;
+			require __DIR__  . '/farmacia/rodape.html';
+			echo HTMLMODELOP5;
+			require __DIR__  . '\\farmacia\\modals.html';
+			require __DIR__  . '\\farmacia\\scripts.html';
+			require __DIR__ . '/medico/scripts_tables.html';
+			echo query_nome($data->nome);
+			echo HTMLMODELOP6;
+		}
+		break;
+	case '/' . PASTAFRONT . '/farmacia/cadastrar':
+		if (isset($_COOKIE['jwt_farmarcia']) && $_COOKIE['jwt_farmarcia'] != -1) {
+			header('Location: ./inicio');
+		} else {
+			echo HTMLMODELOP1;
+			echo "<title>ControlMED | Farmacia | Cadastrar</title>";
+			require __DIR__ . '/farmacia/head.html';
+			echo "</head><body class='bg-gradient-primary'>";
+			require __DIR__  . '/farmacia/cadastro.html';
+			require __DIR__  . '\\farmacia\\modals.html';
+			require __DIR__  . '/farmacia/scripts.html';
+			echo HTMLMODELOP6;
+		}
+		break;
+	case '/' . PASTAFRONT . '/farmacia/login':
+		if (isset($_COOKIE['jwt_farmarcia']) && $_COOKIE['jwt_farmarcia'] != -1) {
+			header('Location: ./inicio');
+		} else {
+			echo HTMLMODELOP1;
+			echo "<title>ControlMED | Farmacia | Login</title>";
+			require __DIR__ . '/farmacia/head.html';
+			echo "</head><body class='bg-gradient-primary'>";
+			require __DIR__  . '/farmacia/login.html';
+			require __DIR__  . '\\farmacia\\modals.html';
+			require __DIR__  . '/farmacia/scripts.html';
+			echo HTMLMODELOP6;
+		}
+		break;
+	case '/' . PASTAFRONT . '/':
+		require __DIR__  . '/index.html';
+		break;
+
+	case '/' . PASTAFRONT . '/procurar_receita':
+		require __DIR__  . '/pesquisar_cpf.html';
 		break;
 
 	default:
@@ -113,7 +296,7 @@ function VeridicarCookie($Cokie)
 	$data = array(
 		'jwt'      => $Cokie
 	);
-	if ($Cokie != null && isset($_COOKIE['jwt'])) {
+	if ($Cokie != null) {
 		$options = array(
 			'http' => array(
 				'method'  => 'POST',
@@ -122,7 +305,7 @@ function VeridicarCookie($Cokie)
 					"Accept: application/json\r\n"
 			)
 		);
-		$url = "http://localhost/ControlMED/api/validar_token.php";
+		$url = "http://localhost/ControlMED/api/validar";
 		$context  = stream_context_create($options);
 		$result = file_get_contents($url, false, $context);
 		$response = json_decode($result);
